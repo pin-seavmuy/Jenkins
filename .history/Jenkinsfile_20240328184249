@@ -1,7 +1,7 @@
 pipeline {
     agent any // window agent, Jenkins-laravel (other machine)
      environment {
-        BOT_TOKEN = "6829228753:AAHg_B5JT9DJxCmQYskzWl4eSUvslvww-cA"
+        BOT_TOKEN = "6853243184:AAF2zVn5Q_bWzgjmAERZjLJp-WEVfMczzDA"
         CHAT_ID = "-1001840170075"
     }
 
@@ -44,17 +44,18 @@ pipeline {
         }
     }
     // Telegram Notification
-    post{
-            success{
-                sh '''
-                sh 1-success-deploy.sh;\
-                '''
-            }
-            failure{
-                sh '''
-                sh 2-fail-deploy.sh;\
-                '''
-            }
+    post {
+        success {
+            sh 'curl -X POST -H "Content-Type: application/json" -d \'{\"chat_id\": \"1003515001\", \"text\": \"[SUCCESS] Ukata api build success!\", \"disable_notification\": false}\' https://api.telegram.org/bot6654457291:AAF8XhNC9HPwMIhgk4DTIcYvpe2o0qoX70o/sendMessage'
+        }
+        failure {
+            sh 'curl -X POST -H "Content-Type: application/json" -d \'{\"chat_id\": \"1003515001\", \"text\": \"[FAILED] Ukata api build failed!\", \"disable_notification\": false}\' https://api.telegram.org/bot6654457291:AAF8XhNC9HPwMIhgk4DTIcYvpe2o0qoX70o/sendMessage'
+        }
     }
-
+    // Mail Notification 
+    // post {
+    //     success {
+    //         emailext body: 'Email sent out form Jenkins', subject: 'Test Email', to: 'mailtrap@gmail.com'
+    //     }
+    // }
 }

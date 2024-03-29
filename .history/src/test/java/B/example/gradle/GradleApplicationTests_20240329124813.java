@@ -8,6 +8,6 @@ class GradleApplicationTests {
 
 	@Test
 	void contextLoads() {
-	
+	}
 
 }
